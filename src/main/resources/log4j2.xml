@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+	<Properties>
+		<Property name="basePath">logs</Property>
+	</Properties>
+	<Appenders>
+		<!-- Logger for console Appender -->
+		<Console name="console" target="SYSTEM_OUT">
+			<PatternLayout
+				pattern="[%-5level] %d{yyyy-MMM-dd HH:mm:ss } [%t] %c{1} - %msg%n" />
+		</Console>
+
+		<!-- Logger for File Appender -->
+		<File name="fileAppender" fileName="${basePath}/customer_info.log">
+			<PatternLayout>
+				<pattern> [%-5level] %d{yyyy-MMM-dd HH:mm a} [%t] %c{1} - %msg%n"
+				</pattern>
+			</PatternLayout>
+		</File>
+
+	</Appenders>
+
+	<Loggers>
+
+		<!-- Logging everything in Hibernate -->
+
+		<Logger name="org.hibernate" level="info" additivity="false">
+			<appender-ref ref="console" />
+		</Logger>
+
+		<!-- Logger to add sql statements -->
+
+		<Logger name="org.hibernate.SQL" level="debug"
+			additivity="false">
+			<appender-ref ref="console" />
+			<appender-ref ref="fileAppender" />
+		</Logger>
+
+		<!-- Logger to add JDBC bind parameters -->
+
+		<Logger name="org.hibernate.type.descriptor.sql" level="trace"
+			additivity="false">
+			<appender-ref ref="console" />
+			<appender-ref ref="fileAppender" />
+		</Logger>
+
+		<!-- Logger for specific/custom packages -->
+
+		<Logger name="com.sosco.customer_info" level="debug" additivity="false">
+			<!-- <appender-ref ref="console" /> -->
+			<appender-ref ref="fileAppender" />
+		</Logger>
+
+
+		<Root level="debug" additivity="false">
+			<appender-ref ref="console" />
+			<appender-ref ref="fileAppender" />
+		</Root>
+	</Loggers>
+</Configuration>
